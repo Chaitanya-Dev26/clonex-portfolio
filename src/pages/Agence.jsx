@@ -35,8 +35,14 @@ const Agence = () => {
         trigger: imageDivRef.current,
         start: 'top 28%',
         end: 'top -105%',
+        markers: true,
         scrub: true,
         pin: true,
+        // pinSpacing: true,
+        // pinReparent: true,
+        // pinType:"transform",
+        // scrub: 1,
+        // anticipatePin: 1,
         onUpdate: (self) => {
           let imageIndex;
           if (self.progress < 1) {
@@ -54,7 +60,7 @@ const Agence = () => {
 
   return (
     <div>
-       <div className="section1">   {/*section1 image used for ref */}
+       <div className="section1 relative py-1">   {/*section1 image used for ref */}
         <div ref={imageDivRef} className="absolute overflow-hidden h-[20vw] rounded-3xl w-[15vw] top-67 left-[30vw]">
           <img ref={imageRef}
             className ="h-full w-full object-cover"
