@@ -9,6 +9,9 @@ import NavContext from "./components/context/NavContext";
 
 const App = () => {
   return (
+
+
+    <div className="overflow-hidden">
     <NavContext>
       <div className="relative">
         <Navbar />
@@ -20,6 +23,7 @@ const App = () => {
         </Routes>
       </div>
     </NavContext>
+    </div>
   )
 }
 
