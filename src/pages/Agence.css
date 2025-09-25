@@ -1,0 +1,6 @@
+/* Agence Page Styles */
+
+/* Hover effect for team member links */
+.link:hover .navGreenOverlay {
+  height: 100% !important;
+}
