@@ -9,7 +9,7 @@ const HomeHeroText = () => {
         </div>
         <div className='lg:text-[9.5vw] text-[12vw] justify-center flex items-start uppercase lg:leading-[8vw] leading-[10.5vw]' >
           all
-        <div className='h-[7vw] w-[15.5vw] rounded-full -m  overflow-hidden'>
+        <div className='lg:h-[7vw] h-[8.5vw] lg:w-[15.5vw] w-[21vw] rounded-full -m  overflow-hidden'>
           <Video /> 
         </div>
           things

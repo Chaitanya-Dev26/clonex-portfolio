@@ -61,7 +61,7 @@ const Agence = () => {
   return (
     <div>
        <div className="section1 relative py-1">   {/*section1 image used for ref */}
-        <div ref={imageDivRef} className="absolute overflow-hidden h-[20vw] rounded-3xl w-[15vw] top-67 left-[30vw]">
+        <div ref={imageDivRef} className="absolute overflow-hidden lg:h-[20vw] h-[28vw] rounded-3xl lg:w-[15vw] w-[20vw] lg:top-67 top-20 left-[30vw]">
           <img ref={imageRef}
             className ="h-full w-full object-cover"
             src="https://k72.ca/images/teamMembers/Carl_480x640.jpg?w=480&h=640&fit=crop&s=f0a84706bc91a6f505e8ad35f520f0b7"
@@ -69,14 +69,14 @@ const Agence = () => {
           />
         </div>
         <div className="relative font-[font2]">
-          <div className="mt-[55vh]">
-            <h1 className="text-[20vw] text-center uppercase leading-[18vw]">
+          <div className="lg:mt-[55vh] mt-[28vh]">
+            <h1 className="lg:text-[20vw] text-[18vw] text-center uppercase leading-[18vw]">
               Seven7y <br />
               two
             </h1>
           </div>
-          <div className="pl-[40%] mt-20">
-            <p className="text-6xl">
+          <div className="lg:pl-[40%] pl-[3%] lg:mt-20 mt-18 p-3">
+            <p className="lg:text-6xl text-[20px] leading-[1]">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We’re
               inquisitive and open-minded, and we make sure creativity crowds
               out ego from every corner. A brand is a living thing, with values,
