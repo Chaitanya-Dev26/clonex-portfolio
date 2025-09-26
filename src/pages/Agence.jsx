@@ -1,8 +1,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import "./Agence.css";
+import { NavbarColorContext } from "../components/context/NavContext";
 
 const Agence = () => {
   // Create a ref to access the image container div in the section1
@@ -15,6 +16,11 @@ const Agence = () => {
   const claireText2Ref = useRef(null);
   const robertNameRef = useRef(null);
   const robertNameRef2 = useRef(null);
+  
+  // Get the navbar color context
+  const colorContext = useContext(NavbarColorContext);
+  const navColor = colorContext ? colorContext[0] : 'black';
+  const setNavColor = colorContext ? colorContext[1] : () => {};
 
   let xPercent = 0;
 
@@ -34,6 +40,60 @@ const Agence = () => {
     "https://k72.ca/uploads/teamMembers/MEGGIE_480X640_2-480x640.jpg",
     "https://k72.ca/uploads/teamMembers/joel_480X640_3-480x640.jpg",
   ];
+
+  // Add this to your existing refs
+  const colorTransitionRef = useRef(null);
+  const sectionsContainerRef = useRef(null);
+
+  useGSAP(() => {
+    // ... your existing animations ...
+
+    // Add navbar color change animation on scroll
+    gsap.to(document.body, {
+      scrollTrigger: {
+        trigger: sectionsContainerRef.current,
+        start: "10% top", // Trigger when 10% of container reaches top of viewport
+        end: "11% top", // End at the same point
+        scrub: true, // Smooth transition
+        markers: true, // Remove this after testing
+        onUpdate: (self) => {
+          // Change navbar color based on scroll progress
+          if (self.progress > 0.5) {
+            setNavColor('white');
+          } else {
+            setNavColor('black');
+          }
+        }
+      }
+    });
+
+    // Add the color transition animation for the container (includes both sections and margin space)
+    gsap.to(sectionsContainerRef.current, {
+      scrollTrigger: {
+        trigger: sectionsContainerRef.current,
+        start: "10% top", // Trigger when 10% of container reaches top of viewport
+        end: "11% top", // End at the same point
+        scrub: true, // Smooth transition
+        markers: true, // Remove this after testing
+      },
+      backgroundColor: "black",
+      color: "white", // Add duration for smoother fade
+      ease: "power2.inOut",
+    });
+
+    // Also animate specific text elements if needed
+    gsap.to(".text-to-change", {
+      scrollTrigger: {
+        trigger: colorTransitionRef.current,
+        start: "50% center",
+        end: "50% center",
+        scrub: true,
+      },
+      color: "white",
+      duration: 1,
+      ease: "power2.inOut",
+    });
+  }, []);
 
   useGSAP(() => {
     gsap.to(imageDivRef.current, {
@@ -115,236 +175,314 @@ const Agence = () => {
           </div>
         </div>
       </div>
-      <div className="section2 h-[53vh] w-full mt-[20vh] px-[11vw]">
-        <div className="font-[font1] font-bold">
-          {/* Top row: left title and right list */}
-          <div className="flex w-full items-start">
-            <div className="w-[33%]">
-              <p className="text-xl lg:text-xl mb-1">Expertise</p>
+      <div ref={sectionsContainerRef} className="sections-container">
+        <div ref={colorTransitionRef} className="section2 h-[53vh] w-full mt-[20vh] px-[11vw]">
+          <div className="font-[font1] font-bold">
+            {/* Top row: left title and right list */}
+            <div className="flex w-full items-start">
+              <div className="w-[33%]">
+                <p className="text-xl lg:text-xl mb-1">Expertise</p>
+              </div>
+              <div className="w-[4%]" />
+              <div className="w-[38%]">
+                <ul className="text-xl lg:text-xl leading-[1.1] space-y-1">
+                  <li>Strategy</li>
+                  <li>Advertising</li>
+                  <li>Branding</li>
+                  <li>Design</li>
+                  <li>Content</li>
+                </ul>
+              </div>
             </div>
-            <div className="w-[4%]" />
-            <div className="w-[38%]">
-              <ul className="text-xl lg:text-xl leading-[1.1] space-y-1">
-                <li>Strategy</li>
-                <li>Advertising</li>
-                <li>Branding</li>
-                <li>Design</li>
-                <li>Content</li>
-              </ul>
-            </div>
-          </div>
 
-          {/* Bottom row: three text blocks */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-34 gap-y-10 mt-28 lg:mt-40">
-            <div>
-              <p className="mt-3 text-lg lg:text-xl leading-snug">
-                Our Work_ Born in curiosity, raised by dedication and fed with a
-                steady diet of creativity.
-              </p>
-            </div>
-            <div>
-              <p className="mt-3 text-lg lg:text-xl leading-snug">
-                Our Creative_Simmering in an environment where talent can come
-                to a full boil. Encouraged to become the best versions of
-                ourselves.
-              </p>
-            </div>
-            <div>
-              <p className="mt-3 text-lg lg:text-xl leading-snug">
-                Our Culture_We’re open to each other. Period. The team works
-                together to create a space that makes us proud.
-              </p>
+            {/* Bottom row: three text blocks */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-34 gap-y-10 mt-28 lg:mt-40">
+              <div>
+                <p className="mt-3 text-lg lg:text-xl leading-snug">
+                  Our Work_ Born in curiosity, raised by dedication and fed with
+                  a steady diet of creativity.
+                </p>
+              </div>
+              <div>
+                <p className="mt-3 text-lg lg:text-xl leading-snug">
+                  Our Creative_Simmering in an environment where talent can come
+                  to a full boil. Encouraged to become the best versions of
+                  ourselves.
+                </p>
+              </div>
+              <div>
+                <p className="mt-3 text-lg lg:text-xl leading-snug">
+                  Our Culture_We’re open to each other. Period. The team works
+                  together to create a space that makes us proud.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="section3 relative font-[font2] h-screen w-full mt-[35vh] px-[11vw]">
-        {/* background image behind heading */}
-        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 h-full w-[36vw] rounded-3xl overflow-hidden z-10">
-          <img
-            className="h-full w-full object-cover"
-            src="https://k72.ca/images/teamMembers/Claire_640X960.jpg?w=640&h=960&s=8db7275995c2d79210fcf8641b5792fc"
-            alt=""
-          />
-        </div>
-        {/* extra heading behind the image */}
-        <div className="claire-row absolute inset-0 mb-75 flex items-center justify-center z-0 pointer-events-none">
-          <h2
-            ref={claireTextRef}
-            className="text-[5vw] lg:text-[10vw] uppercase leading-none text-[#D3FD50]"
-          >
-            claire
-          </h2>
-          <h2
-            ref={claireText2Ref}
-            className="text-[5vw] lg:text-[10vw] uppercase leading-none text-[#D3FD50]"
-          >
-            claire
-          </h2>
-        </div>
-        {/* heading above image */}
-        <div className="relative z-10 flex flex-col items-center h-full">
-          <div className="flex-1" />
-          <div className="name-row mb-[28vh] flex flex-row items-end justify-center">
-            <div
-              ref={robertNameRef}
-              className="flex flex-row items-end whitespace-nowrap"
+        <div className="section3 relative font-[font2] h-screen w-full mt-[35vh] px-[11vw]">
+          {/* background image behind heading */}
+          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 h-full w-[36vw] rounded-3xl overflow-hidden z-10">
+            <img
+              className="h-full w-full object-cover"
+              src="https://k72.ca/images/teamMembers/Claire_640X960.jpg?w=640&h=960&s=8db7275995c2d79210fcf8641b5792fc"
+              alt=""
+            />
+          </div>
+          {/* extra heading behind the image */}
+          <div className="claire-row absolute inset-0 mb-75 flex items-center justify-center z-0 pointer-events-none">
+            <h2
+              ref={claireTextRef}
+              className="text-[5vw] lg:text-[10vw] uppercase leading-none text-[#D3FD50]"
             >
-              <h2 className="lg:text-[10vw] text-[18vw] text-center uppercase leading-none text-[#D3FD50]">
-                Robert
-              </h2>
-              <span className="ml-20 text-[2vw] text-white font-normal uppercase leading-[3]">
-                account manager
-              </span>
-            </div>
-            <div
-              ref={robertNameRef2}
-              className="flex flex-row items-end whitespace-nowrap"
+              claire
+            </h2>
+            <h2
+              ref={claireText2Ref}
+              className="text-[5vw] lg:text-[10vw] uppercase leading-none text-[#D3FD50]"
             >
-              <h2 className="lg:text-[10vw] text-[18vw] text-center uppercase leading-none text-[#D3FD50]">
-                Robert
-              </h2>
-              <span className="ml-20 text-[2vw] text-white font-normal uppercase leading-[3]">
-                account manager
-              </span>
+              claire
+            </h2>
+          </div>
+          {/* heading above image */}
+          <div className="relative z-10 flex flex-col items-center h-full">
+            <div className="flex-1" />
+            <div className="name-row mb-[28vh] flex flex-row items-end justify-center">
+              <div
+                ref={robertNameRef}
+                className="flex flex-row items-end whitespace-nowrap"
+              >
+                <h2 className="lg:text-[10vw] text-[18vw] text-center uppercase leading-none text-[#D3FD50]">
+                  Robert
+                </h2>
+                <span className="ml-20 text-[2vw] text-white font-normal uppercase leading-[3]">
+                  account manager
+                </span>
+              </div>
+              <div
+                ref={robertNameRef2}
+                className="flex flex-row items-end whitespace-nowrap"
+              >
+                <h2 className="lg:text-[10vw] text-[18vw] text-center uppercase leading-none text-[#D3FD50]">
+                  Robert
+                </h2>
+                <span className="ml-20 text-[2vw] text-white font-normal uppercase leading-[3]">
+                  account manager
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="section4 h-[200vh] w-full">
-        <div className=" py-22 ">
-          <div className="link origin-top relative border-t-2 border-black mt-[10vh] px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account excutive</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Sophie Auger</h1>
+        <div className="section4 h-[200vh] w-full">
+          <div className=" py-22 ">
+            <div className="link origin-top relative border-t-1 border-white mt-[10vh] px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300  items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account excutive
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Sophie Auger
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Buisness Lead</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Carl Godbout</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Buisness Lead
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Carl Godbout
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Copywriter</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Camille Brière</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Copywriter
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Camille Brière
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Manager</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Claire Robert</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Manager
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Claire Robert
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">EVP & Managing Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Pierre-Luc Paiement</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  EVP & Managing Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Pierre-Luc Paiement
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Art Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Mélanie Laviolette</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Art Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Mélanie Laviolette
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Director of Strategy</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Michèle Riendeau</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Director of Strategy
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Michèle Riendeau
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Meggie Lavoi</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Meggie Lavoi
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Art Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Alex Sauvageau</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Art Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Alex Sauvageau
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Manager</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Philippe Perreault</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Manager
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Philippe Perreault
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Strategist</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Béatrice Roussin</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Strategist
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Béatrice Roussin
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Manager</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Lou Gravel-Jean</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Manager
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Lou Gravel-Jean
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Planificateur stratégique principal</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Olivier Roeyaerts</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Planificateur stratégique principal
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Olivier Roeyaerts
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Manager</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Hélène Conti</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Manager
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Hélène Conti
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Account Coordinator</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Lawrence Meunier</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Account Coordinator
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Lawrence Meunier
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Associate Creative Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Hugo Joseph</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Associate Creative Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Hugo Joseph
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Graphic Designer</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Olivier Duclos</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Graphic Designer
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Olivier Duclos
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Associate Creative Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">Joël Letarte</h1>
+            <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Associate Creative Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
+                  Joël Letarte
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out"></div>
-          </div>
-          <div className="link origin-top relative border-t-2 border-b-2 border-black px-4 py-1 overflow-hidden">
-            <div className="flex justify-between items-center relative z-10">
-              <h1 className="font-[font2] text-[1.5vw] text-left pb-4">Associate Creative Director</h1>
-              <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase ">Sébastien Roy</h1>
+            <div className="link origin-top relative border-t-1 border-b-1 border-white px-4 py-1 overflow-hidden">
+              <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
+                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                  Associate Creative Director
+                </h1>
+                <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase ">
+                  Sébastien Roy
+                </h1>
+              </div>
+              <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out "></div>
             </div>
-            <div className="navGreenOverlay absolute inset-0 bg-[#D3FD50] h-0 transition-all duration-300 ease-in-out "></div>
           </div>
         </div>
       </div>
@@ -353,7 +491,3 @@ const Agence = () => {
 };
 
 export default Agence;
-
-
-
-
