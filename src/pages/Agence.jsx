@@ -44,7 +44,8 @@ const Agence = () => {
     gsap.to(document.body, {
       scrollTrigger: {
         trigger: sectionsContainerRef.current,
-        start: "10% top", 
+        start: "10% top",
+        end:"11% top" , 
         scrub: true, 
         markers: true, 
         onUpdate: (self) => {
@@ -60,8 +61,10 @@ const Agence = () => {
     gsap.to(sectionsContainerRef.current, {
       scrollTrigger: {
         trigger: sectionsContainerRef.current,
-        start: "10% top", 
+        start: "10% top",
+        end: "11% top", 
         scrub: true, 
+        markers: true,
       },
       backgroundColor: "black",
       color: "white", 
