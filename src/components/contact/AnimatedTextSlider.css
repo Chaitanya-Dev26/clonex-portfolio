@@ -1,0 +1,32 @@
+/* Animated Text Slider Styles */
+.relative.overflow-hidden.w-full {
+  transform-origin: center;
+  min-height: 150px;
+}
+
+.moveX {
+  animation-name: moveAnimation;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes moveAnimation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animated-text-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.animated-text-container h2 {
+  white-space: nowrap;
+}

@@ -142,20 +142,23 @@ const FullScreenNav = () => {
                         </div>
 
                     </div>
-                    <div className='link origin-top relative border-t-1 border-white'>
+                    <div className='link origin-top relative border-t-1 border-white cursor-pointer' onClick={() => {
+                        setNavOpen(false)
+                        navigate('/contact')
+                    }}>
                         <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Contact</h1>
                         <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
                             <div className='moveX flex items-center'>
                                 <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://images.pond5.com/angular-heart-icon-animation-footage-157501035_iconl.jpeg" alt="" />
+                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
                                 <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://images.pond5.com/angular-heart-icon-animation-footage-157501035_iconl.jpeg" alt="" />
+                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
                             </div>
                             <div className='moveX flex items-center'>
                                 <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://images.pond5.com/angular-heart-icon-animation-footage-157501035_iconl.jpeg" alt="" />
+                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
                                 <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://images.pond5.com/angular-heart-icon-animation-footage-157501035_iconl.jpeg" alt="" />
+                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
                             </div>
                         </div>
 

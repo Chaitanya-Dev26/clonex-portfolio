@@ -7,13 +7,12 @@ const Navbar = () => {
     const navContext = useContext(NavbarContext)
     const colorContext = useContext(NavbarColorContext)
     
-    // Safely destructure the context values
     const navOpen = navContext ? navContext[0] : false
     const setNavOpen = navContext ? navContext[1] : () => {}
     const navColor = colorContext ? colorContext[0] : 'white'
 
     return (
-        <div className='z-4 flex fixed top-0 w-full items-start justify-between'>
+        <div className='z-50 flex fixed top-0 w-full items-start justify-between'>
             <Link to="/" className='p-3 block'>
                 <div className='lg:w-32 w-23'>
                     <svg className='w-full' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103 44">

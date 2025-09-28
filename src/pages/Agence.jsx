@@ -6,9 +6,6 @@ import "./Agence.css";
 import { NavbarColorContext } from "../components/context/NavContext";
 
 const Agence = () => {
-  // Create a ref to access the image container div in the section1
-  // This allows us to directly manipulate the DOM element, such as adding
-  // scroll-based animations or other imperative DOM operations
   gsap.registerPlugin(ScrollTrigger);
   const imageDivRef = useRef(null);
   const imageRef = useRef(null);
@@ -17,7 +14,6 @@ const Agence = () => {
   const robertNameRef = useRef(null);
   const robertNameRef2 = useRef(null);
   
-  // Get the navbar color context
   const colorContext = useContext(NavbarColorContext);
   const navColor = colorContext ? colorContext[0] : 'black';
   const setNavColor = colorContext ? colorContext[1] : () => {};
@@ -41,23 +37,17 @@ const Agence = () => {
     "https://k72.ca/uploads/teamMembers/joel_480X640_3-480x640.jpg",
   ];
 
-  // Add this to your existing refs
   const colorTransitionRef = useRef(null);
   const sectionsContainerRef = useRef(null);
 
   useGSAP(() => {
-    // ... your existing animations ...
-
-    // Add navbar color change animation on scroll
     gsap.to(document.body, {
       scrollTrigger: {
         trigger: sectionsContainerRef.current,
-        start: "10% top", // Trigger when 10% of container reaches top of viewport
-        end: "11% top", // End at the same point
-        scrub: true, // Smooth transition
-        markers: true, // Remove this after testing
+        start: "10% top", 
+        scrub: true, 
+        markers: true, 
         onUpdate: (self) => {
-          // Change navbar color based on scroll progress
           if (self.progress > 0.5) {
             setNavColor('white');
           } else {
@@ -67,21 +57,16 @@ const Agence = () => {
       }
     });
 
-    // Add the color transition animation for the container (includes both sections and margin space)
     gsap.to(sectionsContainerRef.current, {
       scrollTrigger: {
         trigger: sectionsContainerRef.current,
-        start: "10% top", // Trigger when 10% of container reaches top of viewport
-        end: "11% top", // End at the same point
-        scrub: true, // Smooth transition
-        markers: true, // Remove this after testing
+        start: "10% top", 
+        scrub: true, 
       },
       backgroundColor: "black",
-      color: "white", // Add duration for smoother fade
+      color: "white", 
       ease: "power2.inOut",
     });
-
-    // Also animate specific text elements if needed
     gsap.to(".text-to-change", {
       scrollTrigger: {
         trigger: colorTransitionRef.current,
@@ -272,11 +257,11 @@ const Agence = () => {
             </div>
           </div>
         </div>
-        <div className="section4 h-[200vh] w-full">
+        <div className="section4 h-[198vh] w-full">
           <div className=" py-22 ">
-            <div className="link origin-top relative border-t-1 border-white mt-[10vh] px-4 py-1 overflow-hidden">
+            <div className="link origin-top relative border-t-1 border-white mt-[10vh] px-4 py-1 group">
               <div className="flex justify-between hover:text-black transition-all duration-300  items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account excutive
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -287,7 +272,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Buisness Lead
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -298,7 +283,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Copywriter
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -309,7 +294,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Manager
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -320,7 +305,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   EVP & Managing Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -331,7 +316,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Art Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -342,7 +327,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Director of Strategy
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -353,7 +338,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -364,7 +349,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Art Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -375,7 +360,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Manager
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -386,7 +371,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Strategist
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -397,7 +382,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Manager
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -408,7 +393,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Planificateur stratégique principal
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -419,7 +404,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Manager
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -430,7 +415,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Account Coordinator
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -441,7 +426,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Associate Creative Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -452,7 +437,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Graphic Designer
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -463,7 +448,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Associate Creative Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase">
@@ -474,7 +459,7 @@ const Agence = () => {
             </div>
             <div className="link origin-top relative border-t-1 border-b-1 border-white px-4 py-1 overflow-hidden">
               <div className="flex justify-between hover:text-black transition-all duration-300 items-center relative z-10">
-                <h1 className="font-[font2] text-[1.5vw] text-left pb-4">
+                <h1 className="font-[font1] text-[19px] text-left pb-4">
                   Associate Creative Director
                 </h1>
                 <h1 className="font-[font2] text-[2.5vw] text-right leading-[0.8] pt-6 pb-2 uppercase ">
@@ -485,6 +470,7 @@ const Agence = () => {
             </div>
           </div>
         </div>
+        <div className="section5 h-screen w-full"></div>
       </div>
     </div>
   );
