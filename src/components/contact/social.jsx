@@ -10,7 +10,7 @@ const Social = () => {
                         <button className='uppercase cursor-pointer font-[font2] text-[5vw] border-1 rounded-full border-white hover:text-[#D3FD50] pr-7 pl-7 pt-3 leading-none inline-block' style={{ margin: '0', lineHeight: '1' }}>in</button>
                         <button className='uppercase cursor-pointer font-[font2] text-[5vw] border-1 rounded-full border-white hover:text-[#D3FD50] pr-7 pl-7 pt-3 leading-none inline-block' style={{ margin: '0', lineHeight: '1' }}>be</button>
                     </div>
-                </div>
+ </div>
     )
 }
 

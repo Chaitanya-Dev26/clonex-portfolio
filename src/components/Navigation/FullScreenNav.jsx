@@ -70,7 +70,7 @@ const FullScreenNav = () => {
     }, [navOpen])
 
     return (
-        <div ref={fullScreenRef} id='fullscreennav' className='fullscreennav hidden text-white overflow-hidden h-screen w-full z-50 absolute'>
+        <div ref={fullScreenRef} id='fullscreennav' className='fullscreennav hidden text-white overflow-hidden h-screen w-full z-50 absolute fixed'>
             <div className='h-screen w-full fixed'>
                 <div className='h-full w-full flex'>
                     <div className='stairing h-full w-1/5 bg-black'></div>
@@ -95,8 +95,8 @@ const FullScreenNav = () => {
                     <div onClick={() => {
                         setNavOpen(false)
                     }} className='lg:h-38 h-28 lg:w-38 w-30 relative cursor-pointer flex items-center justify-center'>
-                        <div className='lg:h-45 h-32 lg:w-1 w-0.5 bg-[#D3FD50] absolute rotate-45'></div>
-                        <div className='lg:h-45 h-32 lg:w-1 w-0.5 bg-[#D3FD50] absolute -rotate-45'></div>
+                        <div className='lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute rotate-45'></div>
+                        <div className='lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute -rotate-45'></div>
                     </div>
                 </div>
                 <div className=' lg:py-22 py-28'>
@@ -163,7 +163,12 @@ const FullScreenNav = () => {
                         </div>
 
                     </div>
-                    <div className='link origin-top relative border-y-1 border-white'>
+                    <div className='link origin-top relative border-y-1 border-white cursor-pointer'
+                    onClick={() => {
+                        setNavOpen(false)
+                        navigate('/blog')
+                    }}
+                    >
                         <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Blogs</h1>
                         <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
                             <div className='moveX flex items-center'>
@@ -179,7 +184,6 @@ const FullScreenNav = () => {
                                 <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
