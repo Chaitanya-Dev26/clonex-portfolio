@@ -37,7 +37,7 @@ const Projects = () => {
         start: 'top 100%',
         end: 'top -200%',
         scrub: true,
-        markers: true
+        markers: false
       }
     })
   })
