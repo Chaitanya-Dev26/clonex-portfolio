@@ -10,23 +10,40 @@ const AnimatedTextSlider = ({ text = "HELLO@K72.CA", images = ["/black-heart-svg
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
     
-    if (containerRef.current) {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        markers: true,
-        onUpdate: (self) => {
-          const scrollDirection = self.direction
-          if (scrollDirection > 0) {
-            gsap.to(containerRef.current, { rotation: -5, duration: 0.7, ease: 'power2.out' })
-          } else if (scrollDirection < 0) {
-            gsap.to(containerRef.current, { rotation: 5, duration: 0.7, ease: 'power2.out' })
-          }
+    const container = containerRef.current;
+    if (!container) return;
+    
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: 'top bottom',
+      end: 'bottom top',
+      markers: false, // Disable markers in production
+      onUpdate: (self) => {
+        if (!container) return; // Additional safety check
+        const scrollDirection = self.direction;
+        if (scrollDirection > 0) {
+          gsap.to(container, { 
+            rotation: -5, 
+            duration: 0.7, 
+            ease: 'power2.out' 
+          });
+        } else if (scrollDirection < 0) {
+          gsap.to(container, { 
+            rotation: 5, 
+            duration: 0.7, 
+            ease: 'power2.out' 
+          });
         }
-      })
-    }
-  }, [])
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      if (scrollTrigger) {
+        scrollTrigger.kill();
+      }
+    };
+  }, { scope: containerRef });
 
   return (
     <div 

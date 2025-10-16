@@ -47,7 +47,7 @@ const Agence = () => {
         start: "10% top",
         end:"11% top" , 
         scrub: true, 
-        markers: true, 
+        markers: false, 
         onUpdate: (self) => {
           if (self.progress > 0.5) {
             setNavColor('white');
@@ -64,7 +64,7 @@ const Agence = () => {
         start: "10% top",
         end: "11% top", 
         scrub: true, 
-        markers: true,
+        markers: false,
       },
       backgroundColor: "black",
       color: "white", 
