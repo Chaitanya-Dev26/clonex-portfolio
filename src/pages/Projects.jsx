@@ -24,6 +24,7 @@ const Projects = () => {
     image2: 'https://k72.ca/images/caseStudies/BAnQ_100TEMPS/100temps_Thumbnail.jpg?w=1280&h=960&s=5c944bb014f8643227ad7bb117fccc14'
   }]
 
+  const projectCount = projects.length;
 
   gsap.registerPlugin(ScrollTrigger)
 
@@ -47,8 +48,11 @@ const Projects = () => {
   return (
     <div >
       <div className='lg:px-4'>
-        <div className=' pt-[45vh]'>
-          <h2 className='font-[font2] lg:text-[9.5vw] text-6xl uppercase'>Projects</h2>
+        <div className='pt-[45vh]'>
+          <div className='flex items-top gap-2'>
+            <h2 className='font-[font2] lg:text-[12.5vw] text-6xl uppercase leading-[0.8]'>Work</h2>
+            <span className='text-5xl font-[font2] text-black'>{projectCount}</span>
+          </div>
         </div>
         <div className='-lg:mt-20 lol'>
           {projects.map(function (elem, idx) {
