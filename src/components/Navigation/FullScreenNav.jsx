@@ -1,194 +1,414 @@
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { NavbarContext } from '../context/NavContext'
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import React, { useContext, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { NavbarContext } from "../context/NavContext";
+import { useLocationTime } from "../../hooks/useLocationTime";
 
 const FullScreenNav = () => {
-    const fullNavLinksRef = useRef(null)
-    const fullScreenRef = useRef(null)
-    const navigate = useNavigate()
+  const fullNavLinksRef = useRef(null);
+  const fullScreenRef = useRef(null);
+  const navigate = useNavigate();
 
-    const [navOpen, setNavOpen] = useContext(NavbarContext)
+  const [navOpen, setNavOpen] = useContext(NavbarContext);
+    const socialLinks = ["fb", "ig", "in", "be"];
 
-    function gsapAnimation() {
-        const tl = gsap.timeline()
-        tl.to('.fullscreennav', {
-            display: 'block'
-        })
-        tl.to('.stairing', {
-            delay: 0.2,
-            height: '100%',
-            stagger: {
-                amount: -0.3
-            }
-        })
-        tl.to('.link', {
-            opacity: 1,
-            rotateX: 0,
-            stagger: {
-                amount: 0.3
-            }
-        })
-        tl.to('.navlink', {
-            opacity: 1
-        })
-    }
-    function gsapAnimationReverse() {
-        const tl = gsap.timeline()
-        tl.to('.link', {
-            opacity: 0,
-            rotateX: 90,
-            stagger: {
-                amount: 0.1
-            }
-        })
-        tl.to('.stairing', {
-            height: 0,
-            stagger: {
-                amount: 0.1
-            }
-        })
-        tl.to('.navlink', {
-            opacity: 0
-        })
-        tl.to('.fullscreennav', {
-            display: 'none',
-        })
-    }
+  const {
+    currentTime,
+    allLocations,
+    currentLocationIndex,
+    timeRef,
+    locationRef,
+    formatTime,
+  } = useLocationTime();
 
+  const footerLinks = [
+    "privacy policy",
+    "privacy notice",
+    "ethics report",
+    "consent choices",
+  ];
 
-    useGSAP(function () {
-        if (navOpen) {
+  function gsapAnimation() {
+    const tl = gsap.timeline();
+    tl.to(".fullscreennav", {
+      display: "block",
+    });
+    tl.to(".stairing", {
+      delay: 0.2,
+      height: "100%",
+      stagger: {
+        amount: -0.3,
+      },
+    });
+    tl.to(".link", {
+      opacity: 1,
+      rotateX: 0,
+      stagger: {
+        amount: 0.3,
+      },
+    });
+    tl.to(".navlink", {
+      opacity: 1,
+    });
+    tl.to(".footer-section", {
+      opacity: 1,
+      duration: 0.2,
+      ease: "power2.out"
+    });
+  }
+  function gsapAnimationReverse() {
+    const tl = gsap.timeline();
+    tl.to(".footer-section", {
+      opacity: 0,
+      duration: 0.3,
+      stagger: 0.1,
+      ease: "power2.in"
+    });
+    tl.to(".link", {
+      opacity: 0,
+      rotateX: 90,
+      stagger: {
+        amount: 0.1,
+      },
+    });
+    tl.to(".stairing", {
+      height: 0,
+      stagger: {
+        amount: 0.1,
+      },
+    });
+    tl.to(".navlink", {
+      opacity: 0,
+    });
+    tl.to(".fullscreennav", {
+      display: "none",
+    });
+  }
 
-            gsapAnimation()
-        } else {
+  useGSAP(
+    function () {
+      if (navOpen) {
+        gsapAnimation();
+      } else {
+        gsapAnimationReverse();
+      }
+    },
+    [navOpen]
+  );
 
-            gsapAnimationReverse()
-
-        }
-    }, [navOpen])
-
-    return (
-        <div ref={fullScreenRef} id='fullscreennav' className='fullscreennav hidden text-white overflow-hidden h-screen w-full z-50 absolute fixed'>
-            <div className='h-screen w-full fixed'>
-                <div className='h-full w-full flex'>
-                    <div className='stairing h-full w-1/5 bg-black'></div>
-                    <div className='stairing h-full w-1/5 bg-black'></div>
-                    <div className='stairing h-full w-1/5 bg-black'></div>
-                    <div className='stairing h-full w-1/5 bg-black'></div>
-                    <div className='stairing h-full w-1/5 bg-black'></div>
-                </div>
-            </div>
-            <div ref={fullNavLinksRef} className='relative'>
-                <div className="navlink flex w-full justify-between items-start">
-                    <div className='p-3'>
-                        <div className='lg:w-32 w-24 cursor-pointer' onClick={() => {
-                            setNavOpen(false)
-                            navigate('/')
-                        }}>
-                            <svg className=' w-full' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103 44">
-                                <path fill='white' fillRule="evenodd" d="M35.1441047,8.4486911 L58.6905011,8.4486911 L58.6905011,-1.3094819e-14 L35.1441047,-1.3094819e-14 L35.1441047,8.4486911 Z M20.0019577,0.000230366492 L8.83414254,25.3433089 L18.4876971,25.3433089 L29.5733875,0.000230366492 L20.0019577,0.000230366492 Z M72.5255345,0.000691099476 L72.5255345,8.44846073 L94.3991559,8.44846073 L94.3991559,16.8932356 L72.5275991,16.8932356 L72.5275991,19.5237906 L72.5255345,19.5237906 L72.5255345,43.9274346 L102.80937,43.9274346 L102.80937,35.4798953 L80.9357483,35.4798953 L80.9357483,25.3437696 L94.3996147,25.3428482 L94.3996147,16.8953089 L102.80937,16.8953089 L102.80937,0.000691099476 L72.5255345,0.000691099476 Z M-1.30398043e-14,43.9278953 L8.78642762,43.9278953 L8.78642762,0.0057591623 L-1.30398043e-14,0.0057591623 L-1.30398043e-14,43.9278953 Z M58.6849955,8.4486911 L43.1186904,43.9274346 L52.3166592,43.9274346 L67.9877996,8.4486911 L58.6849955,8.4486911 Z M18.4688864,25.3437696 L26.7045278,43.9278953 L36.2761871,43.9278953 L28.1676325,25.3375497 L18.4688864,25.3437696 Z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div onClick={() => {
-                        setNavOpen(false)
-                    }} className='lg:h-38 h-28 lg:w-38 w-30 relative cursor-pointer flex items-center justify-center'>
-                        <div className='lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute rotate-45'></div>
-                        <div className='lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute -rotate-45'></div>
-                    </div>
-                </div>
-                <div className=' lg:py-22 py-28'>
-                    <div className='link origin-top relative border-t-1 border-white cursor-pointer' onClick={() => {
-                        setNavOpen(false)
-                        navigate('/projects')
-                    }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Projects</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>see everything</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>see everything</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
-                            </div>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>see everything</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>see everything</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='link origin-top relative border-t-1 border-white cursor-pointer' onClick={() => {
-                        setNavOpen(false)
-                        navigate('/agence')
-                    }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Agence</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>know us</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>know us</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec" alt="" />
-                            </div>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>know us</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>know us</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec" alt="" />
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='link origin-top relative border-t-1 border-white cursor-pointer' onClick={() => {
-                        setNavOpen(false)
-                        navigate('/contact')
-                    }}>
-                        <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Contact</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
-                            </div>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>Send us a fax</h2>
-                                <img className='lg:h-27 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover' src="/public/black-heart-svgrepo-com.svg" alt="" />
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='link origin-top relative border-y-1 border-white cursor-pointer'
-                    onClick={() => {
-                        setNavOpen(false)
-                        navigate('/blog')
-                    }}
-                    >
-                        <h1 className='font-[font2] text-5xl lg:text-[8vw] text-center lg:leading-[0.8] lg:pt-10 pt-3 uppercase'>Blogs</h1>
-                        <div className='moveLink absolute text-black flex top-0 bg-[#D3FD50]'>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>read articles</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/blog/blogImg/ier.com-16107673482102220.gif" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>read articles</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5" alt="" />
-                            </div>
-                            <div className='moveX flex items-center'>
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>read articles</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5" alt="" />
-                                <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl  text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>read articles</h2>
-                                <img className='lg:h-30 h-14 rounded-full shrink-0 lg:w-80 w-32 object-cover' src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div
+      ref={fullScreenRef}
+      id="fullscreennav"
+      className="fullscreennav hidden text-white overflow-hidden h-screen w-full z-50 absolute fixed"
+    >
+      <div className="h-screen w-full fixed">
+        <div className="h-full w-full flex">
+          <div className="stairing h-full w-1/5 bg-black"></div>
+          <div className="stairing h-full w-1/5 bg-black"></div>
+          <div className="stairing h-full w-1/5 bg-black"></div>
+          <div className="stairing h-full w-1/5 bg-black"></div>
+          <div className="stairing h-full w-1/5 bg-black"></div>
         </div>
-    )
-}
+      </div>
+      <div ref={fullNavLinksRef} className="relative">
+        <div className="navlink flex w-full justify-between items-start">
+          <div className="p-3">
+            <div
+              className="lg:w-32 w-24 cursor-pointer"
+              onClick={() => {
+                setNavOpen(false);
+                navigate("/");
+              }}
+            >
+              <svg
+                className=" w-full"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 103 44"
+              >
+                <path
+                  fill="white"
+                  fillRule="evenodd"
+                  d="M35.1441047,8.4486911 L58.6905011,8.4486911 L58.6905011,-1.3094819e-14 L35.1441047,-1.3094819e-14 L35.1441047,8.4486911 Z M20.0019577,0.000230366492 L8.83414254,25.3433089 L18.4876971,25.3433089 L29.5733875,0.000230366492 L20.0019577,0.000230366492 Z M72.5255345,0.000691099476 L72.5255345,8.44846073 L94.3991559,8.44846073 L94.3991559,16.8932356 L72.5275991,16.8932356 L72.5275991,19.5237906 L72.5255345,19.5237906 L72.5255345,43.9274346 L102.80937,43.9274346 L102.80937,35.4798953 L80.9357483,35.4798953 L80.9357483,25.3437696 L94.3996147,25.3428482 L94.3996147,16.8953089 L102.80937,16.8953089 L102.80937,0.000691099476 L72.5255345,0.000691099476 Z M-1.30398043e-14,43.9278953 L8.78642762,43.9278953 L8.78642762,0.0057591623 L-1.30398043e-14,0.0057591623 L-1.30398043e-14,43.9278953 Z M58.6849955,8.4486911 L43.1186904,43.9274346 L52.3166592,43.9274346 L67.9877996,8.4486911 L58.6849955,8.4486911 Z M18.4688864,25.3437696 L26.7045278,43.9278953 L36.2761871,43.9278953 L28.1676325,25.3375497 L18.4688864,25.3437696 Z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            onClick={() => {
+              setNavOpen(false);
+            }}
+            className="lg:h-38 h-28 lg:w-38 w-30 relative cursor-pointer flex items-center justify-center"
+          >
+            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute rotate-45"></div>
+            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute -rotate-45"></div>
+          </div>
+        </div>
+        <div className=" lg:py-14 py-28">
+          <div
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            onClick={() => {
+              setNavOpen(false);
+              navigate("/projects");
+            }}
+          >
+            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+              Projects
+            </h1>
+            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  see everything
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-75 w-32 object-cover"
+                  src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  see everything
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  see everything
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  see everything
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            onClick={() => {
+              setNavOpen(false);
+              navigate("/agence");
+            }}
+          >
+            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+              Agence
+            </h1>
+            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  know us
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  know us
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
+                  alt=""
+                />
+              </div>
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  know us
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  know us
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            onClick={() => {
+              setNavOpen(false);
+              navigate("/contact");
+            }}
+          >
+            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+              Contact
+            </h1>
+            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  Send us a fax
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
+                  src="/public/black-heart-svgrepo-com.svg"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  Send us a fax
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
+                  src="/public/black-heart-svgrepo-com.svg"
+                  alt=""
+                />
+              </div>
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  Send us a fax
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
+                  src="/public/black-heart-svgrepo-com.svg"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  Send us a fax
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
+                  src="/public/black-heart-svgrepo-com.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="link origin-top relative border-y-2 border-[#4D4D4D] cursor-pointer"
+            onClick={() => {
+              setNavOpen(false);
+              navigate("/blog");
+            }}
+          >
+            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+              Blog
+            </h1>
+            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  read articles
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/uploads/blog/blogImg/ier.com-16107673482102220.gif"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  read articles
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
+                  alt=""
+                />
+              </div>
+              <div className="moveX flex items-center">
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  read articles
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
+                  alt=""
+                />
+                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
+                  read articles
+                </h2>
+                <img
+                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
+                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-export default FullScreenNav
+        {/* Location Time Section */}
+        <div className="footer-section text-white text-sm font-[font1] flex items-center justify-between px-2 pt-25 relative opacity-0">
+          {/* Location & Time */}
+          <div className="footer-section flex items-center gap-3 opacity-0">
+            {/* Globe Icon */}
+            <svg
+              className="w-10 h-10 text-gray-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+
+            {/* Dynamic Location and Time */}
+            <div className="flex items-baseline gap-2">
+              <div
+                ref={locationRef}
+                className="text-2xl font-[font2] text-gray-300 uppercase"
+              >
+                {allLocations.length > 0
+                  ? allLocations[currentLocationIndex].name
+                  : "LOADING..."}
+              </div>
+              <div className="text-2xl font-[font2] text-gray-300">|</div>
+              <div
+                ref={timeRef}
+                className="text-2xl font-mono text-white tracking-tight"
+              >
+                {allLocations.length > 0 ? formatTime(currentTime) : "--:--:--"}
+              </div>
+            </div>
+          </div>
+          {/* Center Footer Links */}
+          <div className="footer-section flex gap-5 justify-center absolute left-1/2 transform -translate-x-1/2 opacity-0">
+            {footerLinks.map((label) => (
+              <button
+                key={label}
+                className="uppercase cursor-pointer hover:text-[#D3FD50] opacity-80 tracking-wide"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* socials */}
+          <div className="footer-section uppercase opacity-0">
+            <div className="flex gap-2 font-[font2] items-center">
+              {socialLinks.map((label) => (
+                <button
+                  key={label}
+                  className="uppercase cursor-pointer text-white text-3xl border-2 rounded-full border-white hover:border-[#D3FD50] hover:text-[#D3FD50] px-3 pt-2 leading-none inline-block font-[font2]"
+                  style={{ lineHeight: "1" }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FullScreenNav;
