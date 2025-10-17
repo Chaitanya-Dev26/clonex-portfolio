@@ -32,7 +32,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-white w-full">
       {/* Main Heading */}
-      <div className="w-full pt-[20vh] pb-8 ">
+      <div className="w-full pt-[20vh] pb-8 px-2 ">
         <h2 className='font-[font2] lg:text-[9.5vw] text-6xl uppercase'>Blog</h2>
       </div>
 
@@ -78,21 +78,21 @@ const Blog = () => {
       <main className="w-full py-3 px-4 mb-[15vh]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {featuredArticles.map((article) => (
-            <article key={article.id} className="cursor-pointer">
+            <article key={article.id} className="group cursor-pointer">
               <div className="overflow-hidden">
                 {/* Article Image */}
-                <div className="aspect-[4/3] bg-gray-100 overflow-hidden rounded-[50px] group">
+                <div className="aspect-[4/3] bg-gray-100 overflow-hidden rounded-[50px]">
                   <img
                     src={article.image}
                     alt={article.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 
                 {/* Article Content */}
                 <div className="">
                   <p className="pt-4 text-2xl text-black font-[font2] text-left mb-2">{article.date}</p>
-                  <h2 className="text-4xl font-[font2] mb-2 font-[600] uppercase">{article.title}</h2>
+                  <h2 className="text-4xl font-[font2] mb-2 font-[600] uppercase group-hover:underline">{article.title}</h2>
                   <div className="flex justify-between items-center">
                     <div className="relative group/category">
                       <span className="inline-block bg-gray-200 text-black text-xl font-[font2] px-1.5 py-1 relative overflow-hidden">
