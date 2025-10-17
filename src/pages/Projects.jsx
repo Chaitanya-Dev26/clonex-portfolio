@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react'
 import ProjectCard from '../components/project/ProjectCard'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
+import Social from '../components/common/socialMain'
 
 
 const Projects = () => {
@@ -26,34 +27,39 @@ const Projects = () => {
 
   gsap.registerPlugin(ScrollTrigger)
 
-  useGSAP(function () {
-    gsap.from('.hero', {
-      height: '100px',
-      stagger: {
-        amount: 0.05
-      },
-      scrollTrigger: {
-        trigger: '.lol',
-        start: 'top 100%',
-        end: 'top -200%',
-        scrub: true,
-        markers: false
-      }
+
+  useGSAP(() => {
+    gsap.utils.toArray('.hero').forEach((hero, index) => {
+      gsap.from(hero, {
+        height: '100px',      // shrink effect
+        stagger: { amount: 0.01 }, // small stagger
+        scrollTrigger: {
+          trigger: hero,
+          start: 'top 100%',  // when top of hero hits bottom of viewport
+          end: 'top -150%',   // allow animation to continue as it scrolls up
+          scrub: true,
+          markers: true
+        }
+      })
     })
   })
 
   return (
-    <div className='lg:p-4 p-2 mb-[100vh]'>
-      <div className=' pt-[45vh]'>
-        <h2 className='font-[font2] lg:text-[9.5vw] text-6xl uppercase'>Projects</h2>
+    <div >
+      <div className='lg:px-4'>
+        <div className=' pt-[45vh]'>
+          <h2 className='font-[font2] lg:text-[9.5vw] text-6xl uppercase'>Projects</h2>
+        </div>
+        <div className='-lg:mt-20 lol'>
+          {projects.map(function (elem, idx) {
+            return <div key={idx} className='hero w-full lg:h-[650px] mb-4 flex lg:flex-row flex-col lg:gap-4 gap-2'>
+              <ProjectCard image1={elem.image1} image2={elem.image2} />
+            </div>
+          })}
+        </div>
       </div>
-      <div className='-lg:mt-20 lol'>
-        {projects.map(function (elem, idx) {
-          return <div key={idx} className='hero w-full lg:h-[650px] mb-4 flex lg:flex-row flex-col lg:gap-4 gap-2'>
-            <ProjectCard image1={elem.image1} image2={elem.image2} />
-          </div>
-        })}
-
+      <div>
+        <Social />
       </div>
     </div>
   )

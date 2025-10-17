@@ -32,8 +32,8 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-white w-full">
       {/* Main Heading */}
-      <div className="w-full pt-12 pb-8 ">
-        <h1 className="text-4xl md:text-5xl font-bold">Blog</h1>
+      <div className="w-full pt-[20vh] pb-8 ">
+        <h2 className='font-[font2] lg:text-[9.5vw] text-6xl uppercase'>Blog</h2>
       </div>
 
       {/* Header with Categories */}
