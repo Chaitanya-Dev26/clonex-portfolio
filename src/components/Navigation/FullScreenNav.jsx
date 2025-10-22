@@ -41,6 +41,11 @@ const FullScreenNav = () => {
         amount: -0.3,
       },
     });
+    tl.to(".footer-section", {
+      opacity: 1,
+      duration: 0.2,
+      ease: "power2.out"
+    });
     tl.to(".link", {
       opacity: 1,
       rotateX: 0,
@@ -51,18 +56,12 @@ const FullScreenNav = () => {
     tl.to(".navlink", {
       opacity: 1,
     });
-    tl.to(".footer-section", {
-      opacity: 1,
-      duration: 0.2,
-      ease: "power2.out"
-    });
   }
   function gsapAnimationReverse() {
     const tl = gsap.timeline();
     tl.to(".footer-section", {
       opacity: 0,
-      duration: 0.3,
-      stagger: 0.1,
+      duration: 0.2,
       ease: "power2.in"
     });
     tl.to(".link", {

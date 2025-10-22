@@ -10,7 +10,7 @@ const HomeBottomText = () => {
         infuses our strategies, brands and communications with real feeling. We’re transparent, honest and say what we mean, and when we believe in something, we’re all in.
       </p>
       <div className='lg:border-3 border-2 hover:border-[#D3FD50] hover:text-[#D3FD50] lg:h-28 flex items-center px-3 pt-1 lg:px-12 border-white rounded-full uppercase'>
-        <Link className='text-[6vw] lg:lg:mt-5' to='/projects'>Projects</Link>
+        <Link className='text-[6vw] lg:lg:mt-5' to='/projects'>Work</Link>
       </div>
       <div className='lg:border-3 border-2 hover:border-[#D3FD50] hover:text-[#D3FD50] lg:h-28 flex items-center px-3 pt-1 lg:px-12 border-white rounded-full uppercase'>
         <Link className='text-[6vw] lg:lg:mt-5' to='/agence'>agence</Link>
