@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import React, { useRef, useEffect, useContext } from "react";
+import Social from "../components/common/socialMain";
 import "./Agence.css";
 import { NavbarColorContext } from "../components/context/NavContext";
 
@@ -13,6 +14,10 @@ const Agence = () => {
   const claireText2Ref = useRef(null);
   const robertNameRef = useRef(null);
   const robertNameRef2 = useRef(null);
+  const project1Ref = useRef(null);
+  const project2Ref = useRef(null);
+  const project3Ref = useRef(null);
+  const socialRef = useRef(null);
   
   const colorContext = useContext(NavbarColorContext);
   const navColor = colorContext ? colorContext[0] : 'black';
@@ -64,7 +69,7 @@ const Agence = () => {
         start: "10% top",
         end: "11% top", 
         scrub: true, 
-        markers: false,
+        markers: true,
       },
       backgroundColor: "black",
       color: "white", 
@@ -107,6 +112,42 @@ const Agence = () => {
             imageRef.current.src = imageArray[imageIndex];
           }
         },
+      },
+    });
+
+    // Project 1 - First sticky section
+    gsap.to(project1Ref.current, {
+      scrollTrigger: {
+        trigger: project1Ref.current,
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: true,
+        pinSpacing: false,
+      },
+    });
+
+    // Project 2 - Second sticky section that scrolls over project 1
+    gsap.to(project2Ref.current, {
+      scrollTrigger: {
+        trigger: project2Ref.current,
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: true,
+        pinSpacing: false,
+      },
+    });
+
+    // Project 3 - Third sticky section that scrolls over project 2
+    gsap.to(project3Ref.current, {
+      scrollTrigger: {
+        trigger: project3Ref.current,
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: true,
+        pinSpacing: false,
       },
     });
   }, []);
@@ -260,6 +301,7 @@ const Agence = () => {
             </div>
           </div>
         </div>
+        {/* Employees Section */}
         <div className="section4 h-[198vh] w-full">
           <div className=" py-22 ">
             <div className="link origin-top relative border-t-1 border-white mt-[10vh] px-4 py-1 group">
@@ -473,7 +515,64 @@ const Agence = () => {
             </div>
           </div>
         </div>
-        <div className="section5 h-screen w-full"></div>
+        {/*projects*/}
+        <div ref={project1Ref} className="section5 h-screen w-full rounded-[3rem] mb-8 relative overflow-hidden group">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 ease-in-out group-hover:scale-105 rounded-[3rem]"
+            style={{ backgroundImage: 'url(https://k72.ca/images/caseStudies/LAMAJEURE_-_Son_sur_mesure/chalaxeur-thumbnail_img.jpg?w=1280&h=960&s=1d30e394b903c242ad9a4f2cb2463cda)' }}
+          ></div>
+          <div className="absolute inset-0 rounded-[3rem] bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"></div>
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
+            <h2 className="text-white text-2xl font-[font2] uppercase cursor-pointer transition-all duration-300 hover:text-[#D3FD50] hover:underline">
+              view all projects
+            </h2>
+          </div>
+          <div className="relative z-10 flex flex-col items-center justify-center h-full">
+            <div className="text-white text-4xl font-[font1] text-center mb-1">
+              Lamajeure
+            </div>
+            <div className="text-white text-8xl font-[font2] text-center leading-relaxed group-hover:underline transition-all duration-300">
+              Lamajeure
+            </div>
+          </div>
+        </div>
+        
+        <div ref={project2Ref} className="h-screen w-full rounded-[3rem] mb-8 relative overflow-hidden cursor-pointer group">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 ease-in-out group-hover:scale-105 rounded-[3rem]"
+            style={{ backgroundImage: 'url(https://k72.ca/images/caseStudies/CRISIS24/crisis24_behance_1920X1200_cartes.jpg?w=1280&h=960&s=bb42c9de87442e1bffc542c332e07124)' }}
+          ></div>
+          <div className="absolute inset-0 rounded-[3rem] bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"></div>
+          <div className="relative z-10 flex flex-col items-center justify-center h-full">
+            <div className="text-white text-4xl font-[font1] text-center mb-1">
+              GardaWorld
+            </div>
+            <div className="text-white text-8xl font-[font2] text-center leading-relaxed group-hover:underline transition-all duration-300">
+              Crsis24
+            </div>
+          </div>
+        </div>
+        
+        <div ref={project3Ref} className="h-screen w-full rounded-[3rem] mb-8 relative overflow-hidden cursor-pointer group">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 ease-in-out group-hover:scale-105 rounded-[3rem]"
+            style={{ backgroundImage: 'url(https://k72.ca/images/caseStudies/FRUITE/Fruite_thumbnail_bbq.jpg?w=1280&h=960&s=953c1f702bec28d66d07e95bc1261821)' }}
+          ></div>
+          <div className="absolute inset-0 rounded-[3rem] bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"></div>
+          <div className="relative z-10 flex flex-col items-center justify-center h-full">
+            <div className="text-white text-4xl font-[font1] text-center mb-1">
+              Lassonde
+            </div>
+            <div className="text-white text-8xl font-[font2] text-center leading-relaxed group-hover:underline transition-all duration-300">
+              Fruitè
+            </div>
+          </div>
+        </div>
+        
+        {/* Social section that collapses over the third div */}
+        <div ref={socialRef} className="w-full">
+          <Social />
+        </div>
       </div>
     </div>
   );
