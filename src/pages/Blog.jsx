@@ -1,13 +1,10 @@
 import {  ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
 import React, { useRef, useEffect, useContext, useState } from "react";
-import { NavbarColorContext } from "../components/context/NavContext";
 import Social from "../components/common/socialMain";
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('All');
-  const colorContext = useContext(NavbarColorContext);
-  const navColor = colorContext ? colorContext[0] : 'black'; 
   const categories = ['All', 'Design', 'Tech & AI', 'Account'];
   
   const featuredArticles = [
