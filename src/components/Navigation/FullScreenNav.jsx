@@ -4,6 +4,7 @@ import React, { useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { NavbarContext } from "../context/NavContext";
 import { useLocationTime } from "../../hooks/useLocationTime";
+import { useMarqueeMenu } from "../../hooks/useMarqueeMenu";
 
 const FullScreenNav = () => {
   const fullNavLinksRef = useRef(null);
@@ -11,7 +12,34 @@ const FullScreenNav = () => {
   const navigate = useNavigate();
 
   const [navOpen, setNavOpen] = useContext(NavbarContext);
-    const socialLinks = ["fb", "ig", "in", "be"];
+  const socialLinks = ["fb", "ig", "in", "be"];
+
+  // Refs for marquee menu items
+  const projectsItemRef = useRef(null);
+  const projectsLinkRef = useRef(null);
+  const projectsMarqueeRef = useRef(null);
+  const projectsMarqueeInnerRef = useRef(null);
+
+  const agenceItemRef = useRef(null);
+  const agenceLinkRef = useRef(null);
+  const agenceMarqueeRef = useRef(null);
+  const agenceMarqueeInnerRef = useRef(null);
+
+  const contactItemRef = useRef(null);
+  const contactLinkRef = useRef(null);
+  const contactMarqueeRef = useRef(null);
+  const contactMarqueeInnerRef = useRef(null);
+
+  const blogItemRef = useRef(null);
+  const blogLinkRef = useRef(null);
+  const blogMarqueeRef = useRef(null);
+  const blogMarqueeInnerRef = useRef(null);
+
+  // Initialize marquee menu hooks
+  useMarqueeMenu(projectsItemRef, projectsLinkRef, projectsMarqueeRef, projectsMarqueeInnerRef);
+  useMarqueeMenu(agenceItemRef, agenceLinkRef, agenceMarqueeRef, agenceMarqueeInnerRef);
+  useMarqueeMenu(contactItemRef, contactLinkRef, contactMarqueeRef, contactMarqueeInnerRef);
+  useMarqueeMenu(blogItemRef, blogLinkRef, blogMarqueeRef, blogMarqueeInnerRef);
 
   const {
     currentTime,
@@ -140,204 +168,208 @@ const FullScreenNav = () => {
             }}
             className="lg:h-38 h-28 lg:w-38 w-30 relative cursor-pointer flex items-center justify-center"
           >
-            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute rotate-45"></div>
-            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-[#D3FD50] absolute -rotate-45"></div>
+            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-white absolute rotate-45"></div>
+            <div className="lg:h-45 h-28 lg:w-1 w-0.5 bg-white absolute -rotate-45"></div>
           </div>
         </div>
         <div className=" lg:py-14 py-28">
           <div
-            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            ref={projectsItemRef}
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer overflow-hidden"
             onClick={() => {
               setNavOpen(false);
               navigate("/projects");
             }}
           >
-            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+            <h1 ref={projectsLinkRef} className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
               Projects
             </h1>
-            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  see everything
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-75 w-32 object-cover"
-                  src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  see everything
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  see everything
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  see everything
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
-                  alt=""
-                />
+            <div ref={projectsMarqueeRef} className="marquee absolute top-0 left-0 overflow-hidden w-full h-full pointer-events-none bg-[#D3FD50]">
+              <div ref={projectsMarqueeInnerRef} className="marquee__inner-wrap h-full w-full">
+                <div className="marquee__inner h-full w-fit flex items-center">
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    see everything
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    see everything
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    see everything
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/caseStudies/WIDESCAPE/WS---K72.ca---MenuThumbnail-640x290.jpg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    see everything
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div
-            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            ref={agenceItemRef}
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer overflow-hidden"
             onClick={() => {
               setNavOpen(false);
               navigate("/agence");
             }}
           >
-            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+            <h1 ref={agenceLinkRef} className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
               Agence
             </h1>
-            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  know us
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  know us
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
-                  alt=""
-                />
-              </div>
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  know us
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  know us
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
-                  alt=""
-                />
+            <div ref={agenceMarqueeRef} className="marquee absolute top-0 left-0 overflow-hidden w-full h-full pointer-events-none bg-[#D3FD50]">
+              <div ref={agenceMarqueeInnerRef} className="marquee__inner-wrap h-full w-full">
+                <div className="marquee__inner h-full w-fit flex items-center">
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    know us
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    know us
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    know us
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/teamMembers/Carl_640X290.jpg?w=640&h=290&s=914a1d30b37d791492458db8753216d2"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    know us
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/teamMembers/blank_copie_2.jpg?w=640&h=290&s=b6f8d41383b2ee7821dcaec8b68295ec"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div
-            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer"
+            ref={contactItemRef}
+            className="link origin-top relative border-t-2 border-[#4D4D4D] cursor-pointer overflow-hidden"
             onClick={() => {
               setNavOpen(false);
               navigate("/contact");
             }}
           >
-            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+            <h1 ref={contactLinkRef} className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
               Contact
             </h1>
-            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  Send us a fax
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
-                  src="/public/black-heart-svgrepo-com.svg"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  Send us a fax
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
-                  src="/public/black-heart-svgrepo-com.svg"
-                  alt=""
-                />
-              </div>
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  Send us a fax
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
-                  src="/public/black-heart-svgrepo-com.svg"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  Send us a fax
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-27 w-32 object-cover"
-                  src="/public/black-heart-svgrepo-com.svg"
-                  alt=""
-                />
+            <div ref={contactMarqueeRef} className="marquee absolute top-0 left-0 overflow-hidden w-full h-full pointer-events-none bg-[#D3FD50]">
+              <div ref={contactMarqueeInnerRef} className="marquee__inner-wrap h-full w-full">
+                <div className="marquee__inner h-full w-fit flex items-center">
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    Send us a fax
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="/public/black-heart-svgrepo-com.svg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    Send us a fax
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="/public/black-heart-svgrepo-com.svg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    Send us a fax
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="/public/black-heart-svgrepo-com.svg"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    Send us a fax
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="/public/black-heart-svgrepo-com.svg"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div
-            className="link origin-top relative border-y-2 border-[#4D4D4D] cursor-pointer"
+            ref={blogItemRef}
+            className="link origin-top relative border-y-2 border-[#4D4D4D] cursor-pointer overflow-hidden"
             onClick={() => {
               setNavOpen(false);
               navigate("/blog");
             }}
           >
-            <h1 className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
+            <h1 ref={blogLinkRef} className="font-[font2] text-5xl lg:text-[7.5vw] text-center lg:leading-[0.8] lg:pt-7 pt-3 uppercase">
               Blog
             </h1>
-            <div className="moveLink absolute text-black flex top-0 bg-[#D3FD50]">
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  read articles
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/uploads/blog/blogImg/ier.com-16107673482102220.gif"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  read articles
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
-                  alt=""
-                />
-              </div>
-              <div className="moveX flex items-center">
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  read articles
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
-                  alt=""
-                />
-                <h2 className="whitespace-nowrap font-[font2] lg:text-[7.5vw] text-5xl  text-center lg:leading-[0.8] lg:pt-7 pt-4 uppercase">
-                  read articles
-                </h2>
-                <img
-                  className="lg:h-25 h-14 rounded-full shrink-0 lg:w-60 w-32 object-cover"
-                  src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
-                  alt=""
-                />
+            <div ref={blogMarqueeRef} className="marquee absolute top-0 left-0 overflow-hidden w-full h-full pointer-events-none bg-[#D3FD50]">
+              <div ref={blogMarqueeInnerRef} className="marquee__inner-wrap h-full w-full">
+                <div className="marquee__inner h-full w-fit flex items-center">
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    read articles
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/blog/blogImg/ier.com-16107673482102220.gif"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    read articles
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    read articles
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/images/blog/blogImg/50ff59cc0550df5b36543807a58db98c52e01a22274a317eafbfa5266941579b.png?w=640&h=290&s=4f8134f04fe18db7382b99cec63c95f5"
+                    alt=""
+                  />
+                  <h2 className="marquee__text font-[font2] lg:text-[7.5vw] text-5xl text-center lg:leading-[0.8] uppercase text-black">
+                    read articles
+                  </h2>
+                  <img
+                    className="marquee__img"
+                    src="https://k72.ca/uploads/caseStudies/PJC/Thumbnails/PJC_SiteK72_Thumbnail_640x290-640x290.jpg"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
