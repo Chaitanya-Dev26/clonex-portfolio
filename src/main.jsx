@@ -6,6 +6,7 @@ import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
 import { BrowserRouter } from 'react-router-dom'
 import Stairs from './components/common/staris.jsx'
+import { VideoProvider } from './context/VideoContext.jsx'
 
 // Initialize Lenis with enhanced smoothness
 const lenis = new Lenis({
@@ -26,9 +27,11 @@ requestAnimationFrame(raf);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <Stairs>
-        <App />
-      </Stairs>
+      <VideoProvider>
+        <Stairs>
+          <App />
+        </Stairs>
+      </VideoProvider>
     </BrowserRouter>
   </StrictMode>,
 )

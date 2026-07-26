@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from 'react';
+import { VideoContext } from '../../context/VideoContext';
 
 const Video = () => {
+    const videoUrl = useContext(VideoContext);
+
     return (
-        <div className="h-full w-full">
-            <video className="w-full h-full object-cover" autoPlay loop muted src="/bg.mp4"></video>
+        <div className='w-full h-full'>
+            {videoUrl && (
+                <video aria-hidden="true" className="w-full h-full object-cover" autoPlay loop muted src={videoUrl}></video>
+            )}
         </div>
     );
 };

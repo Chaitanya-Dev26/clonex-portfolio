@@ -23,55 +23,26 @@ export const useLocationTime = () => {
         });
     };
 
-    // Detect visitor's timezone and location
+    // Detect visitor's timezone and location natively
     useEffect(() => {
-        const detectVisitorLocation = async () => {
+        const detectVisitorLocation = () => {
             try {
-                console.log('🔍 Starting location detection...');
+                // Use native browser timezone instead of blocking the critical path with an API call
+                const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const locationName = browserTimezone.split('/')[0]?.toUpperCase() || 'UNKNOWN';
 
-                // Try to get location info from IP first (this works with VPN)
-                try {
-                    const response = await fetch('https://ipapi.co/json/');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                console.log('✅ Native browser timezone detected:', {
+                    country: locationName,
+                    timezone: browserTimezone
+                });
 
-                    const data = await response.json();
-                    const ipBasedTimezone = data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-                    console.log('✅ IP location detected:', {
-                        country: data.country_name,
-                        timezone: ipBasedTimezone,
-                        city: data.city
-                    });
-
-                    setVisitorLocation({
-                        name: data.country_name?.toUpperCase() || 'UNKNOWN',
-                        timezone: ipBasedTimezone,
-                        country: data.country_name || 'Unknown'
-                    });
-
-                } catch (apiError) {
-                    console.warn('⚠️ IP API failed, falling back to browser timezone:', apiError.message);
-
-                    // Fallback to browser timezone if IP API fails
-                    const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                    const locationName = browserTimezone.split('/')[0]?.toUpperCase() || 'UNKNOWN';
-
-                    console.log('✅ Browser timezone fallback:', {
-                        country: locationName,
-                        timezone: browserTimezone,
-                        city: locationName
-                    });
-
-                    setVisitorLocation({
-                        name: locationName,
-                        timezone: browserTimezone,
-                        country: 'Unknown'
-                    });
-                }
+                setVisitorLocation({
+                    name: locationName,
+                    timezone: browserTimezone,
+                    country: locationName
+                });
             } catch (error) {
-                console.error('❌ Location detection completely failed:', error.message);
+                console.error('❌ Native location detection failed:', error.message);
                 console.log('✅ Using default UTC location');
 
                 setVisitorLocation({

@@ -3,10 +3,12 @@
 @font-face {
   font-family: font1;
   src: url(../public/fonts/Lausanne-300.woff2);
+  font-display: swap;
 }
 @font-face {
   font-family: font2;
   src: url(../public/fonts/Lausanne-500.woff2);
+  font-display: swap;
 }
 
 .moveX{
@@ -24,6 +26,7 @@
 .link:hover .moveLink{
   opacity: 1;
 }
+
 
 @keyframes moveAnimation {
   from{
