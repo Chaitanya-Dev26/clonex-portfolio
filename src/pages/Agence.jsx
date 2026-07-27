@@ -45,6 +45,14 @@ const Agence = () => {
   const colorTransitionRef = useRef(null);
   const sectionsContainerRef = useRef(null);
 
+  // Preload images to prevent flickering
+  useEffect(() => {
+    imageArray.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   useGSAP(() => {
     gsap.to(document.body, {
       scrollTrigger: {
@@ -89,32 +97,45 @@ const Agence = () => {
   }, []);
 
   useGSAP(() => {
-    gsap.to(imageDivRef.current, {
-      scrollTrigger: {
-        trigger: imageDivRef.current,
-        start: "top 28%",
-        end: "top -105%",
-        scrub: true,
-        pin: true,
-        // pinSpacing: true,
-        // pinReparent: true,
-        // pinType:"transform",
-        // scrub: 1,
-        // anticipatePin: 1,
-        onUpdate: (self) => {
-          let imageIndex;
-          if (self.progress < 1) {
-            imageIndex = Math.floor(self.progress * imageArray.length);
-          } else {
-            imageIndex = imageArray.length - 1;
-          }
-          if (imageRef.current) {
-            imageRef.current.src = imageArray[imageIndex];
-          }
+    let mm = gsap.matchMedia();
+    
+    mm.add("(min-width: 751px)", () => {
+      gsap.to(imageDivRef.current, {
+        scrollTrigger: {
+          trigger: imageDivRef.current,
+          start: "top 28%",
+          end: "top -110%",
+          scrub: true,
+          pin: true,
+          markers: true,
+          onUpdate: (self) => {
+            if (imageRef.current) {
+              imageRef.current.src = imageArray[Math.floor(self.progress * (imageArray.length - 1))];
+            }
+          },
         },
-      },
+      });
     });
+    
+    mm.add("(max-width: 750px)", () => {
+      gsap.to(imageDivRef.current, {
+        scrollTrigger: {
+          trigger: imageDivRef.current,
+          start: "top 22%",
+          end: "top -26%",
+          scrub: true,
+          pin: true,
+          onUpdate: (self) => {
+            if (imageRef.current) {
+              imageRef.current.src = imageArray[Math.floor(self.progress * (imageArray.length - 1))];
+            }
+          },
+        },
+      });
+    });
+  });
 
+  useGSAP(() => {
     // Project 1 - First sticky section
     gsap.to(project1Ref.current, {
       scrollTrigger: {
